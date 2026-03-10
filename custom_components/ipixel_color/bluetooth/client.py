@@ -84,7 +84,7 @@ class BluetoothClient:
 
             # Store and enable notifications
             self._notification_handler = notification_handler
-            await self._client.start_notify(NOTIFY_UUID, notification_handler)
+            await self._client.start_notify(NOTIFY_UUID, notification_handler, bluez={"use_start_notify": True})
             _LOGGER.info("Successfully connected to iPIXEL device")
             return True
 
@@ -141,7 +141,7 @@ class BluetoothClient:
                 _LOGGER.debug("Could not stop notifications (not started): %s", e)
 
             # Enable notifications to capture response
-            await self._client.start_notify(NOTIFY_UUID, response_handler)
+            await self._client.start_notify(NOTIFY_UUID, response_handler, bluez={"use_start_notify": True})
 
             try:
                 _LOGGER.debug("Sending command: %s", command.hex())
@@ -166,7 +166,7 @@ class BluetoothClient:
 
                 if self._notification_handler:
                     try:
-                        await self._client.start_notify(NOTIFY_UUID, self._notification_handler)
+                        await self._client.start_notify(NOTIFY_UUID, self._notification_handler, bluez={"use_start_notify": True})
                     except BleakError as e:
                         _LOGGER.warning("Could not restart original notification handler: %s", e)
 
