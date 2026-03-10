@@ -1,6 +1,12 @@
-# iPIXEL Color - Home Assistant Integration
+# iPIXEL Color - Home Assistant Integration (Fork)
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A4747U9)
+> **This is a bugfix fork of [cagcoach/ha-ipixel-color](https://github.com/cagcoach/ha-ipixel-color).**
+>
+> Starting with Home Assistant 2026.1, the bundled bleak library (2.0+) changed how BLE notifications are subscribed on Linux/BlueZ — using `AcquireNotify` instead of `StartNotify`. iPIXEL displays do not support `AcquireNotify`, causing connection failures, `NotPermitted` errors, and repeated disconnects when using a Bluetooth dongle.
+>
+> This fork forces the classic `StartNotify` method via bleak's `bluez={"use_start_notify": True}` argument, restoring reliable communication with iPIXEL displays.
+>
+> **To use this fork**, add `https://github.com/nielsmaerten/ha-ipixel-color` as a custom repository in HACS instead of the upstream URL.
 
 A Home Assistant custom integration for iPIXEL Color LED matrix displays via Bluetooth.
 These displays have been recently available as B.K. Light LED Pixel Board from Action and thus get increasing popularity.
@@ -48,12 +54,14 @@ Place `.ttf`/`.otf` font files in the `fonts/` folder within the integration dir
 Once configured, you'll get these entities:
 
 **Display Control:**
+
 - `select.{device}_mode` - Display mode (textimage, text, clock)
 - `text.{device}_display` - Enter text with templates and `\n` for newlines
 - `switch.{device}_power` - Turn display on/off
 - `number.{device}_brightness` - Display brightness level (1-100)
 
 **Text Appearance:**
+
 - `select.{device}_font` - Choose from available fonts
 - `number.{device}_font_size` - Font size (0=auto, supports decimals like 12.5)
 - `number.{device}_line_spacing` - Spacing between lines (0-20px)
@@ -62,15 +70,18 @@ Once configured, you'll get these entities:
 - `light.{device}_background_color` - RGB background color
 
 **Clock Mode:**
+
 - `select.{device}_clock_style` - Clock style (0-8)
 - `switch.{device}_clock_24h_format` - 24-hour time format
 - `switch.{device}_clock_show_date` - Show date below time
 
 **Update Control:**
+
 - `switch.{device}_auto_update` - Auto-update on changes
 - `button.{device}_update_display` - Manual refresh
 
 **Device Info:**
+
 - `sensor.{device}_width` - Display width in pixels
 - `sensor.{device}_height` - Display height in pixels
 - `sensor.{device}_device_type` - Device model information
@@ -86,6 +97,7 @@ Temp: {{ states('sensor.temperature') | round(1) }}°C
 ## Quick Start
 
 **Text Mode:**
+
 1. Select mode: `textimage` (for RGB colors) or `text` (native)
 2. Set text: `"Hello\nWorld"`
 3. Choose text and background colors using light entities
@@ -93,12 +105,14 @@ Temp: {{ states('sensor.temperature') | round(1) }}°C
 5. Toggle auto-update ON or use manual update button
 
 **Clock Mode:**
+
 1. Select mode: `clock`
 2. Choose clock style (0-8)
 3. Set 24-hour format and date display preferences
 4. Time syncs automatically
 
 **Templates:**
+
 - Templates update automatically with sensor changes when auto-update is ON
 
 ## Font Management
@@ -116,17 +130,17 @@ Temp: {{ states('sensor.temperature') | round(1) }}°C
 
 ## Status
 
-| Feature | Status |
-|---------|--------|
-| ✅ Text Display (3 modes) | Complete |
-| ✅ RGB Colors | Complete |
-| ✅ Clock Mode (9 styles) | Complete |
-| ✅ Custom Fonts | Complete |
-| ✅ Templates | Complete |
-| ✅ State Persistence | Complete |
-| ✅ Brightness Control | Complete |
-| 🔄 GIF Animations | Planned |
-| 🔄 Animated Variable-Width Fonts | Planned |
+| Feature                          | Status   |
+| -------------------------------- | -------- |
+| ✅ Text Display (3 modes)        | Complete |
+| ✅ RGB Colors                    | Complete |
+| ✅ Clock Mode (9 styles)         | Complete |
+| ✅ Custom Fonts                  | Complete |
+| ✅ Templates                     | Complete |
+| ✅ State Persistence             | Complete |
+| ✅ Brightness Control            | Complete |
+| 🔄 GIF Animations                | Planned  |
+| 🔄 Animated Variable-Width Fonts | Planned  |
 
 ## Technical
 
