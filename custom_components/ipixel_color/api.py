@@ -168,7 +168,7 @@ class iPIXELAPI:
             
             # Enable notifications temporarily
             await self._bluetooth._client.start_notify(
-                "0000fa03-0000-1000-8000-00805f9b34fb", response_handler
+                "0000fa03-0000-1000-8000-00805f9b34fb", response_handler, bluez={"use_start_notify": True}
             )
             
             try:
